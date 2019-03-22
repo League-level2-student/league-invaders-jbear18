@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 
 public class GameObject {
 	int x;
@@ -19,7 +20,13 @@ public class GameObject {
 	}
 
 	void update() {
-		// CONTINUE WITH LEAGUE INVADERS PT.5 NUMBER 5!!!!
+		x += 10;
+		x += y;
+		// 12. Add code to your update method to move the object around. Do not move on
+		// until this has been completed.
+	}
 
+	void draw(Graphics g) {
+		g.fillRect(x, y, 100, 100);
 	}
 }
