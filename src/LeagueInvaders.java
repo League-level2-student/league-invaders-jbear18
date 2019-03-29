@@ -27,9 +27,11 @@ public class LeagueInvaders {
 		frame.getContentPane();
 		frame.setPreferredSize(new Dimension(500, 800));
 		frame.pack();
-		frame.addKeyListener(gamepanel);
 
 		gamepanel.startGame();
+		frame.addKeyListener(gamepanel);
+
+		frame.setTitle("LEAGUE INVADERS");
 
 	}
 
