@@ -12,6 +12,8 @@ import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Timer timer;
 	Font titleFont;
+	Rocketship rocket= new Rocketship(250,700,50,50);
+	ObjectManager objectmanager= new ObjectManager(rocket);
 
 	final int MENU_STATE = 0;
 
@@ -42,7 +44,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	public GamePanel() {
 		timer = new Timer(1000 / 60, this);
-		titleFont = new Font("Arial", Font.CENTER_BASELINE, 38);
+		titleFont = new Font("Arial", Font.CENTER_BASELINE, 35);
 	}
 
 	void startGame() {
@@ -57,23 +59,28 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(titleFont);
 		g.drawString("LEAGUE INVADERS", 30, 50);
 		g.drawString("Press ENTER to start ", 15, 300);
-		g.drawString("Press SPACE for instructions", 0, 500);
+		g.drawString("Press SPACE for instructions", 0,500);
 	}
 
 	void drawGameState(Graphics g) {
 		g.setColor(Color.BLACK);
 
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+objectmanager.draw(g);
 	}
 
+	
+	
+	
+	
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 		g.setColor(Color.black);
 		g.setFont(titleFont);
-		g.drawString("Game Over", 30, 50);
-		g.drawString("You killed 0 enemies ", 15, 300);
-		g.drawString("Press ENTER to restart", 0, 500);
+		g.drawString("Game Over", 175, 50);
+		g.drawString("You killed 0 enemies ", 100, 300);
+		g.drawString("Press ENTER to restart", 50, 500);
 	}
 
 	@Override
@@ -102,7 +109,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	private void updateGameState() {
 		// TODO Auto-generated method stub
-
+objectmanager.update();
 	}
 
 	private void updateMenuState() {
@@ -120,13 +127,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getKeyCode() == 10) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			currentState++;
 			if (currentState > END_STATE) {
 
 				currentState = MENU_STATE;
 
 			}
+			
+		}
+		else if(e.getKeyCode()==KeyEvent.VK_UP) {
+	rocket.up();
+		}
+		else if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+rocket.down();
+		}
+		else if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+rocket.left();
+		}
+		else if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+rocket.right();
 		}
 
 	}
