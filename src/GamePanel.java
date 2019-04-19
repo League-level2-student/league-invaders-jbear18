@@ -136,6 +136,9 @@ objectmanager.update();
 			}
 			
 		}
+		else if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+			objectmanager.addProjectile(new Projectile(rocket.x+10, rocket.y+10, 10, 10));
+		}
 		else if(e.getKeyCode()==KeyEvent.VK_UP) {
 	rocket.up();
 		}
