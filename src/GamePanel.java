@@ -79,7 +79,7 @@ objectmanager.draw(g);
 		g.setColor(Color.black);
 		g.setFont(titleFont);
 		g.drawString("Game Over", 175, 50);
-		g.drawString("You killed 0 enemies ", 100, 300);
+		g.drawString("You killed" + objectmanager.getScore() +" enemies ", 100, 300);
 		g.drawString("Press ENTER to restart", 50, 500);
 	}
 
@@ -110,6 +110,12 @@ objectmanager.draw(g);
 	private void updateGameState() {
 		// TODO Auto-generated method stub
 objectmanager.update();
+objectmanager.manageEnemies();
+objectmanager.checkCollision();
+objectmanager.purgeObjects();
+if(rocket.isAlive==false) {
+	currentState=END_STATE;
+}
 	}
 
 	private void updateMenuState() {
