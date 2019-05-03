@@ -5,11 +5,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
+    public static BufferedImage alienImg;
+
+    public static BufferedImage rocketImg;
+
+    public static BufferedImage bulletImg;
+
+    public static BufferedImage spaceImg;
 	Timer timer;
 	Font titleFont;
 	Rocketship rocket= new Rocketship(250,700,50,50);
@@ -43,6 +53,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public GamePanel() {
+        try {
+
+            alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
+
+            rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
+
+            bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+
+            spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+
+    } catch (IOException e) {
+
+            // TODO Auto-generated catch block
+
+            e.printStackTrace();
+
+    }
 		timer = new Timer(1000 / 60, this);
 		titleFont = new Font("Arial", Font.CENTER_BASELINE, 35);
 	}
@@ -63,9 +90,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
-		g.setColor(Color.BLACK);
-
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+        g.drawImage(GamePanel.spaceImg, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
 objectmanager.draw(g);
 	}
 
@@ -79,7 +104,7 @@ objectmanager.draw(g);
 		g.setColor(Color.black);
 		g.setFont(titleFont);
 		g.drawString("Game Over", 175, 50);
-		g.drawString("You killed" + objectmanager.getScore() +" enemies ", 100, 300);
+		g.drawString("You killed " + objectmanager.getScore() +" enemies ", 100, 300);
 		g.drawString("Press ENTER to restart", 50, 500);
 	}
 
@@ -134,6 +159,10 @@ if(rocket.isAlive==false) {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if(currentState==END_STATE) {
+				rocket=new Rocketship(250,700,50,50);
+				objectmanager=new ObjectManager(rocket);
+			}
 			currentState++;
 			if (currentState > END_STATE) {
 
